@@ -11,7 +11,7 @@ if (process.env.NODE_PORT && portValidator(envPort).validate()===true){
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello World !')
+  res.send('Hello World!')
 })
 
 app.listen(port, () => {
