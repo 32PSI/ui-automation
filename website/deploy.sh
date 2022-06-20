@@ -1,5 +1,5 @@
 #!/bin/bash
-screen -XS $1 quit
+screen -XS $1 quit $ > /dev/null 2>&1
 if [ $1 == 'stage' ]
 then
     export NODE_PORT=4567
