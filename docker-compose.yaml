@@ -34,7 +34,6 @@ services:
 
   mvn-test:
     depends_on:
-      - selenium-hub
       - firefox
       - chrome
     build:
