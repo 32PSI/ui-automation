@@ -1,0 +1,69 @@
+format_version: 10
+pipelines:
+  Pipeline:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: unlockWhenFinished
+    display_order: -1
+    materials:
+      git-43cf178:
+        git: https://github.com/32PSI/ui-automation.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+    - Build:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          buildStage:
+            timeout: 10
+            tasks:
+            - exec:
+                arguments:
+                - ./build.sh
+                - '#{Enviroment}'
+                command: sh
+                working_directory: ./website
+                run_if: passed
+    - Deploy:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: true
+        jobs:
+          Deploy:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - ./deploy.sh
+                - '#{Enviroment}'
+                command: sh
+                working_directory: ./website
+                run_if: passed
+    - Test:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: true
+        jobs:
+          Test:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - ./test.sh
+                - '#{Enviroment}'
+                command: sh
+                run_if: passed
+    parameters:
+      Enviroment: stage
