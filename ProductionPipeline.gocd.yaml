@@ -66,4 +66,4 @@ pipelines:
                 command: sh
                 run_if: passed
     parameters:
-      Enviroment: stage
+      Enviroment: production
